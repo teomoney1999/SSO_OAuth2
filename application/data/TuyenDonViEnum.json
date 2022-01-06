@@ -1,0 +1,14 @@
+[
+      {"value":"1","text":"Tuyến Cục-Vụ Bộ y tế"},
+      {"value":"6","text":"Sở y tế"},
+      {"value":"7","text":"Bệnh viện trung ương - Tuyến tỉnh"},
+      {"value":"8","text":"Viện vệ sinh dịch tễ - Tuyến tỉnh"},
+      {"value":"9","text":"Trung tâm kiểm soát bệnh tật(CDC)- Tuyến tỉnh"},
+      {"value": "11", "text": "Bệnh viện tuyến tỉnh"},
+      {"value": "12", "text": "Trung tâm y tế dự phòng"},
+      {"value": "13", "text": "Trung tâm đa chức năng"},
+      {"value": "15", "text": "Bệnh viện tuyến huyện"},
+      {"value": "16", "text": "Phòng y tế tuyến huyện"},
+      {"value": "17", "text": "Trạm y tế"},
+      {"value": "18", "text": "Phòng khám"}
+]

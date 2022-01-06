@@ -1,0 +1,12 @@
+flask
+alembic
+psycopg2-binary
+SQLAlchemy
+sqlalchemy
+flask_sqlalchemy
+Crypto
+ujson
+Authlib
+requests
+flask-cors
+flask_wtf

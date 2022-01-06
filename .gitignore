@@ -1,0 +1,13 @@
+alembic/**/__pycache__
+application/**/__pycache__
+application/**/**/__pycache__
+/**/*.DS_Store
+alembic/versions/**
+system_analysis/
+system_image/
+
+# application/config/development.py
+#application/config.py
+nohup.out
+
+application/**/__pycache__/*

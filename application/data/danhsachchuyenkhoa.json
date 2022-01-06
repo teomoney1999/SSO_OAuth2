@@ -1,0 +1,145 @@
+{
+"objects":
+[
+        {
+            "id":1,
+            "name":"Tiêm chủng",
+            "short_name":"tiemchung",
+            "code":"TC",
+            "price":150000
+        },
+        {
+            "id":2,
+            "name":"Khám nội",
+            "short_name":"khamnoi",
+            "code":"KN",
+            "price":150000
+        },
+        {
+            "id":3,
+            "name":"Khám ngoại",
+            "short_name":"khamngoai",
+            "code":"KNG",
+            "price":150000
+        },
+        {
+            "id":4,
+            "name":"Khám thai",
+            "short_name":"khamthai",
+            "code":"KT",
+            "price":150000
+        },
+        {
+            "id":5,
+            "name":"Khám tổng quát",
+            "short_name":"khamtongquat",
+            "code":"KTQ",
+            "price":150000
+        },
+        {
+            "id":32,
+            "name":"HÔ HẤP",
+            "short_name":null,
+            "code":"PQ",
+            "price":150000
+        },
+        {
+            "id":37,
+            "name":"LÃO KHOA",
+            "short_name":null,
+            "code":"PW",
+            "price":150000
+        },
+        {
+            "id":21,
+            "name":"MẮT",
+            "short_name":null,
+            "code":"PF",
+            "price":150000
+        },
+        {
+            "id":12,
+            "name":"NGOẠI THẦN KINH",
+            "short_name":null,
+            "code":"P$",
+            "price":150000
+        },
+        {
+            "id":30,
+            "name":"NGOẠI TIM MẠCH",
+            "short_name":null,
+            "code":"PO",
+            "price":150000
+        },
+        {
+            "id":27,
+            "name":"NỘI TIẾT",
+            "short_name":null,
+            "code":"PL",
+            "price":150000
+        },
+        {
+            "id":19,
+            "name":"PHỔI",
+            "short_name":null,
+            "code":"PC",
+            "price":150000
+        },
+        {
+            "id":20,
+            "name":"TAI MŨI HỌNG",
+            "short_name":null,
+            "code":"PD",
+            "price":150000
+        },
+        {
+            "id":26,
+            "name":"THẦN KINH",
+            "short_name":null,
+            "code":"PK",
+            "price":150000
+        },
+        {
+            "id":28,
+            "name":"TIẾT NIỆU",
+            "short_name":null,
+            "code":"PM",
+            "price":150000
+        },
+        {
+            "id":15,
+            "name":"TIÊU HÓA GAN MẬT",
+            "short_name":null,
+            "code":"P7",
+            "price":150000
+        },
+        {
+            "id":24,
+            "name":"TIM MẠCH",
+            "short_name":null,
+            "code":"PI",
+            "price":150000
+        },
+        {
+            "id":3,
+            "name":"TƯ VẤN TÂM LÝ",
+            "short_name":null,
+            "code":"DTTL",
+            "price":500000
+        },
+        {
+            "id":42,
+            "name":"UNG BƯỚU",
+            "short_name":null,
+            "code":"UB",
+            "price":150000
+        },
+        {
+            "id":22,
+            "name":"VIÊM GAN",
+            "short_name":null,
+            "code":"PG",
+            "price":150000
+        }
+    ]
+}
