@@ -9,4 +9,5 @@ ujson
 Authlib
 requests
 flask-cors
-flask_wtf
+Flask-JWT
+uwsgi
