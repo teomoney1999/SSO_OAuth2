@@ -13,4 +13,3 @@ CORS(app, automatic_options=True, supports_credentials=True)
 init_database(app)
 init_extensions(app)
 init_controllers(app)
-

@@ -10,4 +10,6 @@ system_image/
 #application/config.py
 nohup.out
 
+uwsgi_test.ini
+
 application/**/__pycache__/*

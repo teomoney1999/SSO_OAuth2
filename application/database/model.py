@@ -5,8 +5,8 @@ from authlib.integrations.sqla_oauth2 import (
     OAuth2ClientMixin, OAuth2TokenMixin, OAuth2AuthorizationCodeMixin)
 from authlib.oauth2.rfc6749 import grants
 
-import sys
-print("model.py: ", sys.path, __name__)
+# import sys
+# print("model.py: ", sys.path, __name__)
 
 ## RESOURCE OWNER is the user using our service
 class User(CommonModel): 
