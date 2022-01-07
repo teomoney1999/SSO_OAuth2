@@ -10,6 +10,6 @@ system_image/
 #application/config.py
 nohup.out
 
-uwsgi_test.ini
+# uwsgi_test.ini
 sso_oauth2_explain.conf
 application/**/__pycache__/*
