@@ -2,7 +2,7 @@
 Description=SSO OAuth2 Server
 
 [Service] 
-ExecStart=/home/teomoney_vsp/code/SSO_OAuth2/bin/uwsgi --master --emperor /home/teomoney_vsp/code/SSO_OAuth2/repo/uwsgi.ini --die-on-term --uid teomoney_vsp
+ExecStart=/home/teomoney_vsp/code/SSO_OAuth2/bin/uwsgi --master --emperor /home/teomoney_vsp/code/SSO_OAuth2/repo/uwsgi_test.ini --die-on-term --uid teomoney_vsp
 Restart=always
 KillSignal=SIGQUIT 
 Type=notify
