@@ -11,5 +11,5 @@ system_image/
 nohup.out
 
 uwsgi_test.ini
-
+sso_oauth2_explain.conf
 application/**/__pycache__/*
