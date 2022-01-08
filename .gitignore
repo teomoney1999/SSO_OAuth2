@@ -8,6 +8,7 @@ system_image/
 
 # application/config/development.py
 #application/config.py
+__pycache__
 __pycache__/**
 nohup.out
 

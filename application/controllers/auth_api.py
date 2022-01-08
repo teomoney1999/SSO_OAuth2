@@ -62,9 +62,6 @@ def login():
     if not user: 
         return jsonify({"error_code": "NOT_FOUND", "error_message": "User doesn't exist!"})
     
-    # if is_duplicate_user_id(user.id): 
-    #     return "OK", 200
-    
     token = default_uuid()
     resp = make_response(response_current_user(user=user)) 
     resp.set_cookie(key=Cookie.KEY, value=token, max_age=Cookie.MAX_AGE, samesite=Cookie.SAMESITE, secure=Cookie.SECURE, httponly=Cookie.HTTPONLY)
