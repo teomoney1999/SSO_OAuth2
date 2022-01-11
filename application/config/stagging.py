@@ -1,5 +1,6 @@
+import datetime
 class Config: 
-    SECRET_KEY = "acndefhskrmsdfgs"
+    SECRET_KEY = "7gfJ5i671MGs5YatZnYJ"
     SQLALCHEMY_DATABASE_URI = "postgresql://sso_user:123456abcA@localhost:5432/sso_db_2"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     OAUTH2_REFRESH_TOKEN_GENERATOR = True
@@ -20,5 +21,16 @@ class Config:
     
     WTF_CSRF_TIME_LIMIT = 3600
     WTF_CSRF_SSL_STRICT = False
+    
+    # FLASK JWT EXTENDED
+    JWT_SECRET_KEY = "naFxlwKVk2dTJzVLmIF6"
+    JWT_TOKEN_LOCATION = ["cookies", "headers"] 
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=15)
+    JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=30) 
+    # JWT_ALGORITHM = "HS256", 
+    JWT_COOKIE_SAMESITE = "None"
+    JWT_COOKIE_SECURE = True
+    JWT_COOKIE_CSRF_PROTECT = True
+    
     
    
