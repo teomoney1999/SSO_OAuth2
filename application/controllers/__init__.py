@@ -5,7 +5,10 @@ def init_controllers(app):
     prefix = "/api/v1"
     
     import application.controllers.identity as identity
-    app.register_blueprint(identity.bp_app, url_prefix=prefix)
+    app.register_blueprint(identity.bp, url_prefix=prefix)
+    
+    import application.controllers.user as user
+    app.register_blueprint(user.bp, url_prefix=prefix)
     
     import application.controllers.oauth2 as oauth2
     app.register_blueprint(oauth2.bp, url_prefix=prefix)

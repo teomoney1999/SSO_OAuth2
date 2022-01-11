@@ -3,26 +3,24 @@ from flask import (
     jsonify, )
 from flask_jwt_extended import jwt_required
 from application.database import db
-from application.database.model import UserInfo
+from application.database.model import User
 
 from application.helper.api import to_dict
 
 
-bp = Blueprint("identity", __name__)
+bp = Blueprint("user", __name__)
 
-model = "identity"
+model = "user"
 
 # CREATE 
 @bp.route(f"/{model}", methods=["POST"])
 @jwt_required()
 def create(): 
     data = request.get_json()
-    
-    instance = UserInfo() 
+    instance = User() 
     for key in data: 
         if hasattr(instance, key): 
             setattr(instance, key, data.get(key)) 
-    
     db.session.add(instance) 
     db.session.commit()
     return jsonify(to_dict(instance)), 200
@@ -32,11 +30,9 @@ def create():
 @jwt_required()
 def update(id):
     data = request.get_json() 
-    
-    instance = UserInfo.query.get(id)
+    instance = User.query.get(id)
     if not instance: 
         return {"error_code": "NOT_FOUND", "error_message": "Can not found!"}, 500
-        
     for key in data: 
         if hasattr(instance, key): 
             setattr(instance, key, data.get(key)) 
@@ -47,7 +43,7 @@ def update(id):
 @bp.route(f"/{model}", methods=["GET"])
 @jwt_required()
 def get_many():
-    instances = UserInfo.query.all()
+    instances = User.query.all()
     result = []
     if not len(instances): 
         return jsonify({"results": result}), 200
@@ -59,7 +55,7 @@ def get_many():
 @bp.route(f"/{model}/<id>", methods=["GET"])
 @jwt_required()
 def get_single(id):
-    instance = UserInfo.query.get(id)
+    instance = User.query.get(id)
     if not instance: 
         return {"error_code": "NOT_FOUND", "error_message": "Can not found!"}, 500
     return jsonify(to_dict(instance)), 200
@@ -68,10 +64,9 @@ def get_single(id):
 @bp.route(f"/{model}/<id>", methods=["DELETE"])
 @jwt_required()
 def delete(id):
-    instance = UserInfo.query.get(id)
+    instance = User.query.get(id)
     if not instance: 
         return {"error_code": "NOT_FOUND", "error_message": "Can not found!"}, 500
-    
     db.session.delete(instance)
     db.session.commit()
     return jsonify({}), 200
