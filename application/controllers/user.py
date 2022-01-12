@@ -24,7 +24,6 @@ def pre_create_user(request):
 
 # CREATE 
 @bp.route(f"/{model}", methods=["POST"])
-@jwt_required()
 def create(): 
     data = pre_create_user(request)
     instance = User() 
