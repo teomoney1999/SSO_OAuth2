@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, request, session, url_for,
     jsonify, )
+from werkzeug.security import gen_salt, generate_password_hash
 from flask_jwt_extended import jwt_required
 from application.database import db
 from application.database.model import User
@@ -12,11 +13,20 @@ bp = Blueprint("user", __name__)
 
 model = "user"
 
+def pre_create_user(request): 
+    data = request.json 
+    salt_length = 32
+    data["salt"] = gen_salt(salt_length) 
+    data["password"] = generate_password_hash(password=data.get("password"), 
+                                              salt_length=salt_length)
+    return data
+    
+
 # CREATE 
 @bp.route(f"/{model}", methods=["POST"])
 @jwt_required()
 def create(): 
-    data = request.get_json()
+    data = pre_create_user(request)
     instance = User() 
     for key in data: 
         if hasattr(instance, key): 

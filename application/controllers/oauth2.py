@@ -16,7 +16,9 @@ from application.config.cookies import Cookie
 
 bp = Blueprint("oauth2_api", __name__)
 
-@bp.route(f"/oauth2/authorize", methods=("GET", "POST"))
+model = "oauth2"
+
+@bp.route(f"/{model}/authorize", methods=("GET", "POST"))
 @jwt_required()
 def authorize():
     user = get_jwt_identity()
@@ -40,7 +42,7 @@ def authorize():
     return authorization.create_authorization_response(grant_user=user) 
 
 
-@bp.route("/oauth2/token", methods=["POST"])
+@bp.route(f"/{model}/token", methods=["POST"])
 @jwt_required()
 def issue_token(): 
     return authorization.create_token_response()
