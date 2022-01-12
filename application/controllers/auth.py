@@ -4,7 +4,7 @@ from flask import (
     Blueprint, request, redirect, session, url_for,
     jsonify, render_template, make_response)
 from werkzeug.security import gen_salt
-from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_access_token)
+from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_access_cookies)
 from application.database import db
 from application.database.model import User
 from application.helper.api import *
@@ -46,6 +46,6 @@ def login():
 @jwt_required()
 def logout(): 
     resp = make_response({})
-    unset_access_token(resp)
+    unset_access_cookies(resp)
     return resp, 200
         
