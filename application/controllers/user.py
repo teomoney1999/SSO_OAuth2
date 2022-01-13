@@ -20,7 +20,13 @@ def pre_create_user(request):
     data["password"] = generate_password_hash(password=data.get("password"), 
                                               salt_length=salt_length)
     return data
-    
+
+def exclude_columns(instance=None, columns = []): 
+    if not instance: 
+        return None
+    for key in instance: 
+        if key in columns: 
+            delattr(instance, key)
 
 # CREATE 
 @bp.route(f"/{model}", methods=["POST"])
@@ -32,6 +38,7 @@ def create():
             setattr(instance, key, data.get(key)) 
     db.session.add(instance) 
     db.session.commit()
+    exclude_columns(instance, ["password", "salt", "id"])
     return jsonify(to_dict(instance)), 200
 
 # UPDATE

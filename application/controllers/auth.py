@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from flask import (
     Blueprint, request, redirect, session, url_for,
     jsonify, render_template, make_response)
-from werkzeug.security import gen_salt
-from flask_jwt_extended import (create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_access_cookies)
+from werkzeug.security import gen_salt, check_password_hash
+from flask_jwt_extended import (create_access_token, jwt_required, get_jwt, get_jwt_identity, set_access_cookies, unset_access_cookies)
 from application.database import db
 from application.database.model import User
 from application.helper.api import *
@@ -29,12 +29,15 @@ def login():
     except: 
         return jsonify({"error_code": "PARAM_ERROR", "error_message": "Can not read data from request!"}), 500
     
-    if not data or "username" not in data: 
-        return jsonify({"error_code": "PARAM_ERROR", "error_message": "Login failed!"}), 500
+    if (not data) or ("username" not in data) or ("password" not in data): 
+        return jsonify({"error_code": "PARAM_ERROR", "error_message": "Need username and password to login!"}), 500
     
     user = User.query.filter_by(username=data.get("username")).first()
     if not user: 
-        return jsonify({"error_code": "NOT_FOUND", "error_message": "User doesn't exist!"})
+        return jsonify({"error_code": "NOT_FOUND", "error_message": "User doesn't exist!"}), 500
+    
+    # if not check_password_hash(user.password, data.get("password")): 
+    #     return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
     
     token = create_access_token(identity={"id": user.id, "username": user.username})
     
@@ -48,4 +51,17 @@ def logout():
     resp = make_response({})
     unset_access_cookies(resp)
     return resp, 200
+        
+@bp.after_request
+def refresh_expiring_jwts(response): 
+    try: 
+        print("====refresh_expiring_jwts")
+        exp_time = get_jwt()["exp"] 
+        now = datetime.timestamp(datetime.now())
+        if now > exp_time: 
+            access_token = create_access_token(identity=get_jwt_identity()) 
+            set_access_cookies(response, access_token) 
+        return response
+    except: 
+        return response
         
