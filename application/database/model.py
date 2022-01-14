@@ -13,6 +13,8 @@ class User(CommonModel):
     username = db.Column(db.String(255), unique=True) 
     password = db.Column(db.String(255)) 
     salt = db.Column(db.String(255)) 
+    status = db.Column(db.SmallInteger()) 
+    last_login_at = db.Column(db.BigInteger())
 
     def __str__(self): 
         return self.username 

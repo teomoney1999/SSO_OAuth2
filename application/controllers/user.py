@@ -53,6 +53,7 @@ def update(id):
         if hasattr(instance, key): 
             setattr(instance, key, data.get(key)) 
     db.session.commit() 
+    exclude_columns(instance, ["password", "salt"])
     return jsonify(to_dict(instance))
 
 # GET MANY
@@ -64,6 +65,7 @@ def get_many():
     if not len(instances): 
         return jsonify({"results": result}), 200
     for instance in instances: 
+        exclude_columns(instance, ["password", "salt"])
         result.append(to_dict(instance))
     return jsonify({"results": result}), 200
 
@@ -74,6 +76,7 @@ def get_single(id):
     instance = User.query.get(id)
     if not instance: 
         return {"error_code": "NOT_FOUND", "error_message": "Can not found!"}, 500
+    exclude_columns(instance, ["password", "salt"])
     return jsonify(to_dict(instance)), 200
 
 # DELETE

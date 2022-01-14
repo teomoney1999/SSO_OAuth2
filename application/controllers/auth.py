@@ -40,7 +40,6 @@ def login():
     #     return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
     
     token = create_access_token(identity={"id": user.id, "username": user.username})
-    
     resp = make_response({"id": user.id, "username": user.username})
     set_access_cookies(resp, token)
     return resp, 200
@@ -55,7 +54,7 @@ def logout():
 @bp.after_request
 def refresh_expiring_jwts(response): 
     try: 
-        print("====refresh_expiring_jwts")
+        print("====refresh_expiring_jwts", get_jwt())
         exp_time = get_jwt()["exp"] 
         now = datetime.timestamp(datetime.now())
         if now > exp_time: 
