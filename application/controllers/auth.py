@@ -18,7 +18,7 @@ bp = Blueprint("auth", __name__)
 def get_current_user(): 
     # return the identity of the JWT that is accessing the endpoint
     current_token = get_jwt_identity() 
-    print("current_token", current_token)
+    # print("current_token", current_token)
     return jsonify(current_token=current_token), 200
     
 @bp.route(f"/login", methods=["POST"]) 
@@ -66,7 +66,7 @@ def logout():
 @bp.after_request
 def refresh_expiring_jwts(response): 
     try: 
-        print("====refresh_expiring_jwts", get_jwt())
+        # print("====refresh_expiring_jwts", get_jwt())
         exp_time = get_jwt()["exp"] 
         now = datetime.timestamp(datetime.now())
         if now > exp_time: 

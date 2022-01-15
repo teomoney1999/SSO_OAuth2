@@ -14,6 +14,8 @@ class User(CommonModel):
     password = db.Column(db.String(255)) 
     salt = db.Column(db.String(255)) 
     status = db.Column(db.SmallInteger()) 
+    email = db.Column(db.String(255)) 
+    phone = db.Column(db.String(255))
     last_login_at = db.Column(db.BigInteger())
 
     def __str__(self): 
