@@ -8,7 +8,8 @@ from application.extensions import init_extensions
 
 app = Flask(__name__)
 app.config.from_object(Stagging)
-CORS(app, automatic_options=True, supports_credentials=True)
+# CORS(app, supports_credentials=True, allow_headers=["Content-Type", "Cookies", "Set-Cookie"], origins=["http://localhost:3000"], vary_header=False)
+CORS(app, supports_credentials=True)
 
 init_database(app)
 init_extensions(app)

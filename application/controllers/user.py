@@ -24,8 +24,8 @@ def pre_create_user(request):
 def exclude_columns(instance=None, columns = []): 
     if not instance: 
         return None
-    for key in instance: 
-        if key in columns: 
+    for key in columns: 
+        if hasattr(instance, key): 
             delattr(instance, key)
 
 # CREATE 

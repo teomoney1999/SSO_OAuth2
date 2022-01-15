@@ -38,17 +38,26 @@ def login():
     
     # if not check_password_hash(user.password, data.get("password")): 
     #     return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
+    user.last_login_at = now()
+    user.status = 1
     
     token = create_access_token(identity={"id": user.id, "username": user.username})
     resp = make_response({"id": user.id, "username": user.username})
     set_access_cookies(resp, token)
+    
     return resp, 200
 
 @bp.route(f"/logout", methods=["GET"]) 
 @jwt_required()
 def logout(): 
+    identity = get_jwt_identity()
+    user = User.query.get(identity.get("id"))
+    user.status = 0
+    db.session.commit()
+    
     resp = make_response({})
     unset_access_cookies(resp)
+    
     return resp, 200
         
 @bp.after_request
