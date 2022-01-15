@@ -36,10 +36,13 @@ def login():
     if not user: 
         return jsonify({"error_code": "NOT_FOUND", "error_message": "User doesn't exist!"}), 500
     
+    # # TODO: add check password
     # if not check_password_hash(user.password, data.get("password")): 
     #     return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
+    # Update user info
     user.last_login_at = now()
     user.status = 1
+    db.session.commit()
     
     token = create_access_token(identity={"id": user.id, "username": user.username})
     resp = make_response({"id": user.id, "username": user.username})
