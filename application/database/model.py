@@ -52,6 +52,7 @@ class OAuth2Client(CommonModel, OAuth2ClientMixin):
     # client_id: Client Identifier
     # client_secret: Client Password
     # Client Token Endpoint Authentication Method
+    client_name = db.Column(db.String(255))
     user_id = db.Column(db.String(255),
                         db.ForeignKey("user.id", ondelete="CASCADE"))
     user = db.relationship("User") 
