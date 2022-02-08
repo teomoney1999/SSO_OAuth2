@@ -1,8 +1,8 @@
 from math import floor 
 from datetime import datetime, timedelta
 from flask import (
-    Blueprint, request, redirect, session, url_for,
-    jsonify, render_template, make_response)
+    Blueprint, request,
+    jsonify, make_response)
 from werkzeug.security import gen_salt
 from authlib.oauth2 import OAuth2Error
 from authlib.integrations.flask_oauth2 import current_token
@@ -12,7 +12,6 @@ from application.database import db
 from application.database.model import OAuth2Client, User
 from application.extensions.OAuth2.authorization_server import authorization, required_oauth
 from application.helper.api import *
-from application.config.cookies import Cookie
 
 bp = Blueprint("oauth2_api", __name__)
 

@@ -26,7 +26,7 @@ def authorize_payload(user=None, grant=None):
     client["client_name"] = _client_metadata.get("client_name") 
     client["request_scope"] = grant.request.scope
     return {
-        "user": user if type(user) == dict else to_dict(user), 
+        # "user": user if type(user) == dict else to_dict(user), 
         "client": client, 
     }
 
