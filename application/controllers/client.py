@@ -35,8 +35,8 @@ def post():
     for key in keys:
         if key not in data: 
             continue
-        # if hasattr(client, key): 
-        #     setattr(client, key, data[key])
+        if key == 'client_name': 
+            client[key] = data.get(key)
         if (key == "token_endpoint_auth_method") and len(data[key]) and (data[key] == "none"): 
             client.client_secret = ''
         elif key == "token_endpoint_auth_method":
@@ -75,7 +75,7 @@ def update(id):
             instance.client_secret = ''
         elif key == "token_endpoint_auth_method":
             # update client_secret if token_endpoint_auth_method is not none
-            instance.client_secret = data.get(key)
+            instance.client_secret = data.get("client_secret")
         # set value for client_metatdata
         client_metadata[key] = data.get(key)
     instance.set_client_metadata(client_metadata) 
