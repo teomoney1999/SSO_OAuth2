@@ -35,8 +35,8 @@ def post():
     for key in keys:
         if key not in data: 
             continue
-        if hasattr(client, key): 
-            setattr(client, key, data[key])
+        # if hasattr(client, key): 
+        #     setattr(client, key, data[key])
         if (key == "token_endpoint_auth_method") and len(data[key]) and (data[key] == "none"): 
             client.client_secret = ''
         elif key == "token_endpoint_auth_method":
@@ -48,6 +48,39 @@ def post():
     db.session.commit()
     
     return jsonify(to_dict(client)), 200
+
+@bp.route("/client/<id>", methods=["PUT"]) 
+@jwt_required()
+def update(id): 
+    data = request.json
+    instance = OAuth2Client.query.get(id)
+    if not instance: 
+        return {"error_code": "NOT_FOUND", "error_message": "Can not found!"}, 500
+    
+    client_dict = to_dict(instance)
+    for key in client_dict.keys(): 
+        if key in data: 
+            setattr(instance, key, data.get(key))
+    
+    keys = ["client_name", "client_uri", "grant_types", "redirect_uris", "response_types", "scope", "token_endpoint_auth_method"]
+    client_metadata = {}
+    for key in keys:
+        if key not in data: 
+            continue
+        # if hasattr(instance, key): 
+            # set value from key to instance
+            # setattr(instance, key, data[key])
+        if (key == "token_endpoint_auth_method") and len(data[key]) and (data[key] == "none"): 
+            # client_secret = '' if token_endpoint_auth_method is none
+            instance.client_secret = ''
+        elif key == "token_endpoint_auth_method":
+            # update client_secret if token_endpoint_auth_method is not none
+            instance.client_secret = data.get(key)
+        # set value for client_metatdata
+        client_metadata[key] = data.get(key)
+    instance.set_client_metadata(client_metadata) 
+    db.session.commit()
+    return jsonify(to_dict(instance)), 200
 
 # @bp.route(f"{prefix}/client")
 @bp.route("/client", methods=["GET"])
