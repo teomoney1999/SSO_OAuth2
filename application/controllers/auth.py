@@ -37,8 +37,8 @@ def login():
         return jsonify({"error_code": "NOT_FOUND", "error_message": "User doesn't exist!"}), 500
     
     # # TODO: add check password
-    # if not check_password_hash(user.password, data.get("password")): 
-    #     return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
+    if not check_password_hash(user.password, data.get("password")): 
+        return jsonify({"error_code": "NOT_FOUND", "error_message": "Password is not correct!"}), 500
     # Update user info
     user.last_login_at = now()
     user.status = 1
@@ -63,16 +63,17 @@ def logout():
     
     return resp, 200
         
-@bp.after_request
-def refresh_expiring_jwts(response): 
-    try: 
-        # print("====refresh_expiring_jwts", get_jwt())
-        exp_time = get_jwt()["exp"] 
-        now = datetime.timestamp(datetime.now())
-        if now > exp_time: 
-            access_token = create_access_token(identity=get_jwt_identity()) 
-            set_access_cookies(response, access_token) 
-        return response
-    except: 
-        return response
+# @bp.after_request
+# def refresh_expiring_jwts(response): 
+#     try: 
+#         # print("====refresh_expiring_jwts", get_jwt())
+#         exp_time = get_jwt()["exp"] 
+#         now = datetime.timestamp(datetime.now())
+#         target_timestamp = datetime.timestamp(now + timedelta(minutes=10))
+#         if target_timestamp > exp_time: 
+#             access_token = create_access_token(identity=get_jwt_identity()) 
+#             set_access_cookies(response, access_token) 
+#         return response
+#     except (RuntimeError, KeyError): 
+#         return response
         

@@ -83,6 +83,7 @@ def update(id):
 
 # @bp.route(f"{prefix}/client")
 @bp.route("/client", methods=["GET"])
+@jwt_required()
 def get_many():
     # TODO: uncomment this
     # user = current_user(session=session, request=request)

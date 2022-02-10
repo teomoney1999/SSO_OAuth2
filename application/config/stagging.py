@@ -25,12 +25,15 @@ class Config:
     # FLASK JWT EXTENDED
     JWT_SECRET_KEY = "gFW4iCMAQRsmqu0jYsazzZ1HBknRqOUy"
     JWT_TOKEN_LOCATION = ["cookies", "headers"] 
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=15)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=60)
     JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=30) 
+    JWT_ERROR_MESSAGE_KEY = "error_message"
     # JWT_ALGORITHM = "HS256", 
     JWT_COOKIE_SAMESITE = "None"
     JWT_COOKIE_SECURE = True
     JWT_COOKIE_CSRF_PROTECT = True
+    JWT_SESSION_COOKIE = False
+    # JWT_COOKIE_DOMAIN = "http://dev.localhost:3000/"
     JWT_CSRF_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     
     
