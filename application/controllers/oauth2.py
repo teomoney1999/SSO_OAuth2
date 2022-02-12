@@ -17,38 +17,49 @@ bp = Blueprint("oauth2_api", __name__)
 
 model = "oauth2"
 
-@bp.route(f"/{model}/authorize", methods=("GET", "POST"))
+@bp.route(f"/{model}/authorize", methods=["GET"])
 @jwt_required()
-def authorize():
+def get_authorize():
     user = get_jwt_identity()
     if not user: 
         return jsonify({"error_code": "ACCESS_DENIED", "error_message": "Login required!"}), 500
+    
+    end_user = User.query.get(user['id'])
     if request.method == "GET":
         try: 
-            # print("request", request.json)
-            grant = authorization.validate_consent_request(end_user=user) 
+            grant = authorization.validate_consent_request(end_user=end_user) 
         except OAuth2Error as error: 
             return jsonify({"error_code": "OAUTH_ERROR", "error_message": f"{error.error}"})
         return jsonify(authorize_payload(user, grant))
     # POST method use for take resource owner confirmation
+
+@bp.route(f"/{model}/authorize", methods=['POST'])
+def post_authorize(): 
     data = request.json
     if not data: 
         return jsonify({"error_code": "PARAM_ERROR", "error_message": "Need confirmation from Resource Owner!"}), 500
+    
+    grant_user = None
+    
+    if "user_id" not in data:
+        return jsonify({"error_code": "PARAM_ERROR", "error_message": "Need user_id in request!"}), 500
+    end_user = User.query.get(data.get("user_id"))
+    
     if "confirm" not in data: 
         return jsonify({"error_code": "PARAM_ERROR", "error_message": "Can not get confirmation from Resource Owner!"}), 500
-    if data.get("confirm") is not True: 
-        return jsonify({"error_code": "ACCESS_DENIED", "error_message": "Resource Owner does not allow your request!"}), 500
-    return authorization.create_authorization_response(grant_user=user) 
+    if data.get("confirm") is True: 
+        grant_user = end_user
+    return authorization.create_authorization_response(grant_user=grant_user)
 
 
 @bp.route(f"/{model}/token", methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def issue_token(): 
     return authorization.create_token_response()
 
 
 @bp.route("/user") 
-@jwt_required()
+# @jwt_required()
 @required_oauth("profile")
 def find(): 
     user = current_token.user

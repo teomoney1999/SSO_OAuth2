@@ -17,7 +17,7 @@ class Config:
     # other error URIs
     # ]
     CORS_HEADERS = "Content-Type"
-    CORS_RESOURCES = {r"/api/*": {"origins": "*"}}
+    CORS_RESOURCES = {r"/api*": {"origins": "*"}}
     
     WTF_CSRF_TIME_LIMIT = 3600
     WTF_CSRF_SSL_STRICT = False

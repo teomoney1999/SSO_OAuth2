@@ -17,9 +17,9 @@ bp = Blueprint("auth", __name__)
 @jwt_required()
 def get_current_user(): 
     # return the identity of the JWT that is accessing the endpoint
-    current_token = get_jwt_identity() 
+    current_user = get_jwt_identity() 
     # print("current_token", current_token)
-    return jsonify(current_token=current_token), 200
+    return jsonify(current_user=current_user), 200
     
 @bp.route(f"/login", methods=["POST"]) 
 def login(): 
