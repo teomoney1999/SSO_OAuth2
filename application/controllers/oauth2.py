@@ -25,12 +25,11 @@ def get_authorize():
         return jsonify({"error_code": "ACCESS_DENIED", "error_message": "Login required!"}), 500
     
     end_user = User.query.get(user['id'])
-    if request.method == "GET":
-        try: 
-            grant = authorization.validate_consent_request(end_user=end_user) 
-        except OAuth2Error as error: 
-            return jsonify({"error_code": "OAUTH_ERROR", "error_message": f"{error.error}"})
-        return jsonify(authorize_payload(user, grant))
+    try: 
+        grant = authorization.validate_consent_request(end_user=end_user) 
+    except OAuth2Error as error: 
+        return jsonify({"error_code": "OAUTH_ERROR", "error_message": f"{error.error}"})
+    return jsonify(authorize_payload(user, grant))
     # POST method use for take resource owner confirmation
 
 @bp.route(f"/{model}/authorize", methods=['POST'])
@@ -50,6 +49,7 @@ def post_authorize():
     if data.get("confirm") is True: 
         grant_user = end_user
     return authorization.create_authorization_response(grant_user=grant_user)
+    # return authorization.create_authorization_response_with_no_redirect(grant_user=grant_user)
 
 
 @bp.route(f"/{model}/token", methods=["POST"])
@@ -58,7 +58,7 @@ def issue_token():
     return authorization.create_token_response()
 
 
-@bp.route("/user") 
+@bp.route("/api/me") 
 # @jwt_required()
 @required_oauth("profile")
 def find(): 

@@ -14,3 +14,8 @@ CORS(app, supports_credentials=True)
 init_database(app)
 init_extensions(app)
 init_controllers(app)
+
+# @app.after_request
+# def add_header(resp):
+#     resp.headers['Access-Control-Allow-Origin'] = '*'
+#     return resp 
