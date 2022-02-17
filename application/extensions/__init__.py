@@ -10,6 +10,5 @@ jwt = JWTManager()
 def init_extensions(app): 
     # csrf.init_app(app) 
     config_oauth(app)
-    
     jwt.init_app(app)
 

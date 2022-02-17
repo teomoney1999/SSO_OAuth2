@@ -10,6 +10,7 @@ def default_uuid():
     return str(uuid.uuid4())
 
 class CommonModel(db.Model): 
+    # __tablename__ = 'common_model'
     __abstract__ = True
     
     id = db.Column(db.String(255), primary_key=True, default=default_uuid)

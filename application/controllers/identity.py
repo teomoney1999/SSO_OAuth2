@@ -4,8 +4,7 @@ from flask import (
 from flask_jwt_extended import jwt_required
 from application.database import db
 from application.database.model import UserInfo
-
-from application.helper.api import to_dict
+from application.helper.api import *
 
 
 bp = Blueprint("identity", __name__)
@@ -47,13 +46,20 @@ def update(id):
 @bp.route(f"/{model}", methods=["GET"])
 @jwt_required()
 def get_many():
+    user_id = request.args.get('user_id') 
+    if user_id: 
+        instance = UserInfo.query.filter_by(user_id=user_id).first()
+        if not instance: 
+            return jsonify({"error_code": "PARAM_ERROR", "error_message": "Not found!"}), 500  
+        return jsonify(to_dict(instance)), 200 
+    
     instances = UserInfo.query.all()
-    result = []
+    results = []
     if not len(instances): 
-        return jsonify({"results": result}), 200
+        return jsonify({"results": results}), 200
     for instance in instances: 
-        result.append(to_dict(instance))
-    return jsonify({"results": result}), 200
+        results.append(to_dict(instance))
+    return jsonify({"results": results}), 200
 
 # GET SINGLE
 @bp.route(f"/{model}/<id>", methods=["GET"])

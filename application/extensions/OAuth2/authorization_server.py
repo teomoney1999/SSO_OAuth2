@@ -14,7 +14,6 @@ required_oauth = ResourceProtector()
 
 def config_oauth(app): 
     authorization.init_app(app) 
-    
     # supported grant 
     authorization.register_grant(AuthorizationCodeGrant, [CodeChallenge(required=True)])
     authorization.register_grant(ImplicitGrant) 

@@ -4,7 +4,10 @@ from flask import (
     Blueprint, request, redirect, session, url_for,
     jsonify, render_template, make_response)
 from werkzeug.security import gen_salt, check_password_hash
-from flask_jwt_extended import (create_access_token, jwt_required, get_jwt, get_jwt_identity, get_csrf_token, set_access_cookies, unset_access_cookies)
+from flask_jwt_extended import (
+    create_access_token, jwt_required, get_jwt, get_jwt_identity, 
+    get_csrf_token, set_access_cookies, unset_access_cookies, 
+    unset_jwt_cookies, unset_refresh_cookies)
 from application.database import db
 from application.database.model import User
 from application.helper.api import *
@@ -60,6 +63,8 @@ def logout():
     
     resp = make_response({})
     unset_access_cookies(resp)
+    unset_jwt_cookies(resp)
+    unset_refresh_cookies(resp)
     
     return resp, 200
         

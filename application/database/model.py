@@ -1,31 +1,32 @@
+from email.policy import default
 import time
 from application.database import db 
 from application.database.common_model import CommonModel
 from authlib.integrations.sqla_oauth2 import (
     OAuth2ClientMixin, OAuth2TokenMixin, OAuth2AuthorizationCodeMixin)
 from authlib.oauth2.rfc6749 import grants
+from werkzeug.security import check_password_hash
 
 # import sys
 # print("model.py: ", sys.path, __name__)
 
 ## RESOURCE OWNER is the user using our service
 class User(CommonModel): 
+    __tablename__ = 'user'
     username = db.Column(db.String(255), unique=True) 
     password = db.Column(db.String(255)) 
     salt = db.Column(db.String(255)) 
     status = db.Column(db.SmallInteger()) 
-    email = db.Column(db.String(255)) 
-    phone = db.Column(db.String(255))
     last_login_at = db.Column(db.BigInteger())
 
     def __str__(self): 
         return self.username 
     
-    def get_user_id(self): 
+    def get_id(self): 
         return self.id 
     
     def check_password(self, password): 
-        return password == "valid" 
+        return check_password_hash(self.password, password) 
 
 class UserInfo(CommonModel): 
     __tablename__ = "userinfo" 
@@ -40,6 +41,10 @@ class UserInfo(CommonModel):
     ward = db.Column(db.String(255)) 
     date_register = db.Column(db.BigInteger)    # timestamp
     
+    email = db.Column(db.String(255)) 
+    phone_number = db.Column(db.String(255)) 
+    is_latest = db.Column(db.SmallInteger, default=0) # 0 is not latest, 1 is latest info
+    
     user_id = db.Column(db.String(255),
                         db.ForeignKey("user.id", ondelete="CASCADE"))
     user = db.relationship("User") 
@@ -52,6 +57,7 @@ class OAuth2Client(CommonModel, OAuth2ClientMixin):
     # client_id: Client Identifier
     # client_secret: Client Password
     # Client Token Endpoint Authentication Method
+    # __tablename__ = 'o_auth2_client'
     client_name = db.Column(db.String(255))
     user_id = db.Column(db.String(255),
                         db.ForeignKey("user.id", ondelete="CASCADE"))
@@ -60,6 +66,7 @@ class OAuth2Client(CommonModel, OAuth2ClientMixin):
 
 ## TOKEN is used to accesss the user's resources
 class OAuth2Token(CommonModel, OAuth2TokenMixin): 
+    # __tablename__ = 'o_auth2_token'
     # access_token: a token to authorize the http requests
     # refresh_token: (optional) a token to exchange a new access token
     # client_id: this token is issued to which client
@@ -78,6 +85,7 @@ class OAuth2Token(CommonModel, OAuth2TokenMixin):
     
 ## AUTHORIZATION CODE GRANT
 class OAuth2AuthorizationCode(CommonModel, OAuth2AuthorizationCodeMixin): 
+    # __tablename__ = 'oauth2_authorization_code'
     user_id = db.Column(db.String(255),
                         db.ForeignKey("user.id", ondelete="CASCADE"))
     user = db.relationship("User") 
